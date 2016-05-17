@@ -1,0 +1,45 @@
+- name: githubGetUser_1
+  userName: 
+  password: 
+  operation: GET
+  uri: https://api.github.com/users/1
+  json:
+  Content-Type: application/json
+  expected: 200
+
+- name: githubGetRepo
+  userName: 
+  password: 
+  operation: GET
+  uri: https://api.github.com/users/technoweenie/repos
+  json: >
+        {
+          type: owner
+        } 
+  Content-Type: application/json
+  expected: 200
+
+- name: testGetAllFoo
+  userName: 
+  password: 
+  operation: GET
+  uri: https://api.github.com/repos/octokit/octokit.rb/contents/README.md
+  json:
+  Content-Type: application/json
+  expected: 200
+
+- name: testGetAllFoo
+  userName: 
+  password: 
+  operation: GET
+  uri: https://api.github.com/users/whatever
+  json: >
+        {
+         client_id: xxxx,
+         client_secret: yyyy
+        }
+  Content-Type: application/json
+  expected: 200
+
+
+
