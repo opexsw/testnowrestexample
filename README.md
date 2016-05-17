@@ -75,4 +75,4 @@ Reports are created inside the target/reports directory with above mentioned fil
 * Email: __rajashri.dalavi@opexsoftware.com__
 
 ##Licence :eyes:
-For Licence information, see [here](https://github.com/opexsw/testnowrestexample/blob/master/LICENSE.txt)
+For Licence information, see [here](https://github.com/opexsw/testnowrestexample/blob/master/LICENSE)
