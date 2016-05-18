@@ -17,7 +17,7 @@ Major purpose of this example automation is to understand how one can make maxim
 Few Best Practices are as follows:
 
 1. How to test different rest API/Endpoints
-2. How to create json and html reports which helps TestNow to create consolidated reports for you.
+2. How to create reports which helps TestNow to create consolidated reports for you.
 3. How to take failed scenario screenshots
 4. and few more which you can relate to ... :)
 
@@ -32,7 +32,7 @@ __A walk through the folder structure__
 1. src/test/java/com/example folder contain tset class which have all actoins and functions which repeatedly using
 2. src/test/resources contains sample YAML file which have some github rest api endpoints.
 3. APITest.java file is the entry point to test execution
-4. Reports folder is created inside of target folder
+4. surefire-reports folder is created inside of target folder
 
 __Do's and Dont's__
 
@@ -61,12 +61,12 @@ __Commmands__
 3. __mvn clean test__ -- This will do 1 and 2 both
 
 ## Reporting :eyes:
-Magento automation reports are created in following 2 types of format
+RestAPI testing automation reports are created in following 2 types of format
 
-1. __HTML__ : index.html
-2. __JSON__ : index.json
+1. __XML__ : TEST-com.APITest.xml
+2. __TXT__ : com.APITest.txt
 
-Reports are created inside the target/reports directory with above mentioned filenames
+Reports are created inside the target/surefire-reports directory with above mentioned filenames
 
 ##Author :eyes:
 

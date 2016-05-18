@@ -1,10 +1,14 @@
 - name: githubGetUser_1
+  # Add authentication parameters
   userName: 
   password: 
+  # Add method type
   operation: GET
+  # Add Endpoint URL
   uri: https://api.github.com/users/1
   json:
   Content-Type: application/json
+  # Add expected response
   expected: 200
 
 - name: githubGetRepo
@@ -19,7 +23,7 @@
   Content-Type: application/json
   expected: 200
 
-- name: testGetAllFoo
+- name: githubReadFile
   userName: 
   password: 
   operation: GET
@@ -28,7 +32,7 @@
   Content-Type: application/json
   expected: 200
 
-- name: testGetAllFoo
+- name: githubGetUser
   userName: 
   password: 
   operation: GET
