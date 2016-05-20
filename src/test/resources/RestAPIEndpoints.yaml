@@ -1,42 +1,39 @@
-- name: githubGetUser_1
+- name: githubGet_UserWithIdOne
   # Add authentication parameters
   userName: 
   password: 
   # Add method type
   operation: GET
   # Add Endpoint URL
-  uri: https://api.github.com/users/1
+  uri: /users/1
   json:
   Content-Type: application/json
   # Add expected response
   expected: 200
 
-- name: githubGetRepo
+- name: githubGetRepo_opexswtestnowrestexample
   userName: 
   password: 
   operation: GET
-  uri: https://api.github.com/users/technoweenie/repos
-  json: >
-        {
-          type: owner
-        } 
+  uri: /repos/opexsw/testnowrestexample
+  json: 
   Content-Type: application/json
   expected: 200
 
-- name: githubReadFile
+- name: githubGet_ReadmeFileFromTheRepo
   userName: 
   password: 
   operation: GET
-  uri: https://api.github.com/repos/octokit/octokit.rb/contents/README.md
+  uri: /repos/opexsw/testnowrestexample/contents/README.md
   json:
   Content-Type: application/json
   expected: 200
 
-- name: githubGetUser
+- name: githubGetUser_whateverWithClientIdAndclientSecret
   userName: 
   password: 
   operation: GET
-  uri: https://api.github.com/users/whatever
+  uri: /users/whatever
   json: >
         {
          client_id: xxxx,
@@ -44,6 +41,26 @@
         }
   Content-Type: application/json
   expected: 200
+
+- name: githubGet_NonExistingFileFromTheRepo
+  userName: 
+  password: 
+  operation: GET
+  uri: /repos/opexsw/testnowrestexample/contents/NoFile.md
+  json:
+  Content-Type: application/json
+  expected: 404
+
+- name: githubGet_ReadmeFileFromTheRepoSpecificBranch
+  userName: 
+  password: 
+  operation: GET
+  uri: /repos/opexsw/testnowrestexample/contents/README.md?ref=NoBranch
+  json:
+  Content-Type: application/json
+  expected: 200
+
+
 
 
 

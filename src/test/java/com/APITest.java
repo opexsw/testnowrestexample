@@ -24,17 +24,18 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 @RunWith(Parameterized.class)
 public class APITest {
 
+	String baseURL = System.getenv("TEST_URL");
+
 	@Parameters(name = "ApiTest{index}:{0}")
 	public static List<Object[]> getData() throws FileNotFoundException {
 		/* Load the file from the resources directory */
 		ClassLoader classloader = APITest.class.getClassLoader();
 		InputStream input = classloader.getResourceAsStream("RestAPIEndpoints.yaml");
-		System.out.println("----------");
 
 		/* Parse the YAML */
 		Yaml yaml = new Yaml();
 		List<Map<String, Object>> object = (List<Map<String, Object>>) yaml.load(input);
-		List<Object[]> parameters = new ArrayList();
+		List<Object[]> parameters = new ArrayList<>();
 
 		for (Map<String, Object> o : object) {
 			Object[] l = o.values().toArray();
@@ -74,13 +75,13 @@ public class APITest {
 
 	@Test
 	public void testCase() {
-		System.out.println("Running " + fName + "...\n");
 
 		/* Create an HTTP Client */
 		Client client = Client.create();
-		// client.addFilter(new HTTPBasicAuthFilter(USERNAME , PASSWORD));
-		String uri = fPath;
-		System.out.println("URL is===" + uri);
+		if (fuserName != null && fpassword != null) {
+			client.addFilter(new HTTPBasicAuthFilter(fuserName, fpassword));
+		}
+		String uri = baseURL + fPath;
 		WebResource webResource = client.resource(uri);
 		ClientResponse response = null;
 
@@ -90,10 +91,12 @@ public class APITest {
 			response = webResource.accept(fcontent_type).get(ClientResponse.class);
 			break;
 		case POST:
-			response = webResource.accept(fcontent_type).header("Content-Type", fcontent_type).post(ClientResponse.class, uri);
+			response = webResource.accept(fcontent_type).header("Content-Type", fcontent_type)
+					.post(ClientResponse.class, uri);
 			break;
 		case PUT:
-			response = webResource.accept(fcontent_type).header("Content-Type", fcontent_type).put(ClientResponse.class, fJson);
+			response = webResource.accept(fcontent_type).header("Content-Type", fcontent_type).put(ClientResponse.class,
+					fJson);
 			break;
 		case DELETE:
 			response = webResource.delete(ClientResponse.class);
