@@ -30,7 +30,7 @@ public class APITest {
 	public static List<Object[]> getData() throws FileNotFoundException {
 		/* Load the file from the resources directory */
 		ClassLoader classloader = APITest.class.getClassLoader();
-		InputStream input = classloader.getResourceAsStream("RestAPIEndpoints.yaml");
+		InputStream input = classloader.getResourceAsStream("RestAPIEndpoints.json");
 
 		/* Parse the YAML */
 		Yaml yaml = new Yaml();
