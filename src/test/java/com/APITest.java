@@ -33,7 +33,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 @RunWith(Parameterized.class)
 public class APITest {
 
-	String baseURL = "https://api.github.com";//System.getenv("TEST_URL");
+	String baseURL = System.getenv("TEST_URL");
 
 	@Parameters(name = "ApiTest{index}:{0}")
 	public static List<Object[]> getData() throws FileNotFoundException {
