@@ -3,11 +3,20 @@ package com;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +33,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 @RunWith(Parameterized.class)
 public class APITest {
 
-	String baseURL = System.getenv("TEST_URL");
+	String baseURL = "https://api.github.com";//System.getenv("TEST_URL");
 
 	@Parameters(name = "ApiTest{index}:{0}")
 	public static List<Object[]> getData() throws FileNotFoundException {
@@ -59,10 +68,11 @@ public class APITest {
 	private String fuserName;
 	private String fpassword;
 	private String fcontent_type;
+	private String fExpectedText;
 
 	/* Parameters are passed to the constructor */
 	public APITest(String name, String userName, String password, String operation, String path, String json,
-			String content_type, int expected) {
+			String content_type, int expected,String expectedText) {
 		fName = name;
 		fOperation = Operation.valueOf(operation);
 		fPath = path;
@@ -71,6 +81,8 @@ public class APITest {
 		fuserName = userName;
 		fpassword = password;
 		fcontent_type = content_type;
+		fExpectedText=expectedText;
+		
 	}
 
 	@Test
@@ -78,10 +90,11 @@ public class APITest {
 
 		/* Create an HTTP Client */
 		Client client = Client.create();
-		if (fuserName != null && fpassword != null) {
+		if (fuserName != null && fpassword != null && (!fuserName.equals("null")) && (!fpassword.equals("null"))) {
 			client.addFilter(new HTTPBasicAuthFilter(fuserName, fpassword));
 		}
 		String uri = baseURL + fPath;
+		System.out.println("uri is ====" + uri);
 		WebResource webResource = client.resource(uri);
 		ClientResponse response = null;
 
@@ -103,6 +116,35 @@ public class APITest {
 			break;
 		default:
 			break;
+		}
+		
+		/*Check expected text in response string*/
+		try {
+			if (!(fExpectedText.equals("") && fExpectedText == null)) {
+				HttpClient client1 = new DefaultHttpClient();
+				HttpGet httpGet = new HttpGet(uri);
+				HttpResponse response1 = client1.execute(httpGet);
+				int code = response1.getStatusLine().getStatusCode();
+				HttpEntity entity = response1.getEntity();
+
+				if (entity != null) {
+					String responseBody = EntityUtils.toString(entity);
+					System.out.println("responseBody" + responseBody.toString());
+					if (responseBody.contains(fExpectedText)) {
+						response.setStatus(200);
+					}
+				}
+			}
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HttpException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		/* Check the status code */
 		assertEquals(fExpected, response.getStatus());
