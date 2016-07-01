@@ -120,7 +120,7 @@ public class APITest {
 		
 		/*Check expected text in response string*/
 		try {
-			if (!(fExpectedText.equals("") && fExpectedText == null)) {
+			if ((!fExpectedText.equals("")) && (!fExpectedText.equalsIgnoreCase("null"))) {
 				HttpClient client1 = new DefaultHttpClient();
 				HttpGet httpGet = new HttpGet(uri);
 				HttpResponse response1 = client1.execute(httpGet);
